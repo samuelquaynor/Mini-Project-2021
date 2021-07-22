@@ -17,27 +17,28 @@ from datetime import date
 
 @login_required(login_url = 'login')
 def home(request):
-    studentForm = CreateStudentForm()
+    # studentForm = CreateStudentForm()
 
-    if request.method == 'POST':
-        studentForm = CreateStudentForm(data = request.POST, files=request.FILES)
-        # print(request.POST)
-        stat = False 
-        try:
-            student = Student.objects.get(registration_id = request.POST['registration_id'])
-            stat = True
-        except:
-            stat = False
-        if studentForm.is_valid() and (stat == False):
-            studentForm.save()
-            name = studentForm.cleaned_data.get('firstname') +" " +studentForm.cleaned_data.get('lastname')
-            messages.success(request, 'Student ' + name + ' was successfully added.')
-            return redirect('home')
-        else:
-            messages.error(request, 'Student with Registration Id '+request.POST['registration_id']+' already exists.')
-            return redirect('home')
+    # if request.method == 'POST':
+    #     studentForm = CreateStudentForm(data = request.POST, files=request.FILES)
+    #     # print(request.POST)
+    #     stat = False 
+    #     try:
+    #         student = Student.objects.get(registration_id = request.POST['registration_id'])
+    #         stat = True
+    #     except:
+    #         stat = False
+    #     if studentForm.is_valid() and (stat == False):
+    #         studentForm.save()
+    #         name = studentForm.cleaned_data.get('firstname') +" " +studentForm.cleaned_data.get('lastname')
+    #         messages.success(request, 'Student ' + name + ' was successfully added.')
+    #         return redirect('home')
+    #     else:
+    #         messages.error(request, 'Student with Registration Id '+request.POST['registration_id']+' already exists.')
+    #         return redirect('home')
 
-    context = {'studentForm':studentForm}
+    # context = {'studentForm':studentForm}
+    context = {}
     return render(request, 'attendence_sys/home.html', context)
 
 
@@ -133,7 +134,7 @@ def takeAttendence(request):
             messages.success(request, "Attendence taking Success")
             return render(request, 'attendence_sys/attendence.html', context)        
     context = {}
-    return render(request, 'attendence_sys/home.html', context)
+    return render(request, 'attendence_sys/check-attendance.html', context)
 
 def searchAttendence(request):
     attendences = Attendence.objects.all()
@@ -150,8 +151,35 @@ def facultyProfile(request):
     return render(request, 'attendence_sys/facultyForm.html', context)
 
 
+@login_required(login_url = 'login')
+def checkAttendance(request):
+    studentForm = CreateStudentForm()
 
-# class VideoCamera(object):
+    if request.method == 'POST':
+        studentForm = CreateStudentForm(data = request.POST, files=request.FILES)
+        # print(request.POST)
+        stat = False 
+        try:
+            student = Student.objects.get(registration_id = request.POST['registration_id'])
+            stat = True
+        except:
+            stat = False
+        if studentForm.is_valid() and (stat == False):
+            studentForm.save()
+            name = studentForm.cleaned_data.get('firstname') +" " +studentForm.cleaned_data.get('lastname')
+            messages.success(request, 'Student ' + name + ' was successfully added.')
+            return redirect('home')
+        else:
+            messages.error(request, 'Student with Registration Id '+request.POST['registration_id']+' already exists.')
+            return redirect('home')
+
+    context = {'studentForm':studentForm}
+    context = {}
+    return render(request, 'attendence_sys/check-attendance.html', context)
+
+
+
+# class VideoCamera(object):z
 #     def __init__(self):
 #         self.video = cv2.VideoCapture(0)
 #     def __del__(self):

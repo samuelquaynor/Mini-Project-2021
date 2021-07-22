@@ -14,3 +14,5 @@ python manage.py runserver
 ``` 
 ## Live Video of Attendance System
 ![alt text](https://github.com/venugopalkadamba/Face_Verification_based_Attendance_system/blob/master/Final_video.gif)
+
+conda activate env_dlib

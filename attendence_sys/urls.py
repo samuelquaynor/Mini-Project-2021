@@ -12,6 +12,7 @@ urlpatterns = [
     path('updateStudentRedirect/', views.updateStudentRedirect, name='updateStudentRedirect'),
     path('updateStudent/', views.updateStudent, name='updateStudent'),
     path('attendence/', views.takeAttendence, name='attendence'),
+    path('check-attendance/', views.checkAttendance, name='checkattendance'),
     # path('video_feed/', views.videoFeed, name='video_feed'),
     # path('videoFeed/', views.getVideo, name='videoFeed'),
 ]
