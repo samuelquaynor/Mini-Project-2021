@@ -12,19 +12,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="/icons.html">
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'teachers' %}">
               <i class="ni ni-badge text-orange"></i>
               <span class="nav-link-text">Teachers</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="/map.html">
+            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="{% url 'students' %}">
               <i class="ni ni-circle-08 text-primary"></i>
               <span class="nav-link-text">Students</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="/profile.html">
+            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="{% url 'profile' %}">
               <i class="ni ni-single-02 text-yellow"></i>
               <span class="nav-link-text">Profile</span>
             </a>

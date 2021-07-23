@@ -17,46 +17,30 @@ from datetime import date
 
 @login_required(login_url = 'login')
 def home(request):
-    # studentForm = CreateStudentForm()
-
-    # if request.method == 'POST':
-    #     studentForm = CreateStudentForm(data = request.POST, files=request.FILES)
-    #     # print(request.POST)
-    #     stat = False 
-    #     try:
-    #         student = Student.objects.get(registration_id = request.POST['registration_id'])
-    #         stat = True
-    #     except:
-    #         stat = False
-    #     if studentForm.is_valid() and (stat == False):
-    #         studentForm.save()
-    #         name = studentForm.cleaned_data.get('firstname') +" " +studentForm.cleaned_data.get('lastname')
-    #         messages.success(request, 'Student ' + name + ' was successfully added.')
-    #         return redirect('home')
-    #     else:
-    #         messages.error(request, 'Student with Registration Id '+request.POST['registration_id']+' already exists.')
-    #         return redirect('home')
-
-    # context = {'studentForm':studentForm}
     context = {}
     return render(request, 'attendence_sys/home.html', context)
 
 
 def loginPage(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        user = authenticate(request, username = username, password = password)
+    form = LoginForm(request.POST or None)
 
-        if user is not None:
-            login(request, user)
-            return redirect('home')
+    msg = None
+
+    if request.method == "POST":
+
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:    
+                msg = 'Invalid credentials'    
         else:
-            messages.info(request, 'Username or Password is incorrect')
+            msg = 'Error validating the form'    
 
-    context = {}
-    return render(request, 'attendence_sys/login.html', context)
+    return render(request, "attendence_sys/accounts/login.html", {"form": form, "msg" : msg})
 
 @login_required(login_url = 'login')
 def logoutUser(request):
@@ -75,7 +59,7 @@ def updateStudentRedirect(request):
             context = {'form':updateStudentForm, 'prev_reg_id':reg_id, 'student':student}
         except:
             messages.error(request, 'Student Not Found')
-            return redirect('home')
+            return redirect('checkattendance')
     return render(request, 'attendence_sys/student_update.html', context)
 
 @login_required(login_url = 'login')
@@ -88,10 +72,10 @@ def updateStudent(request):
             if updateStudentForm.is_valid():
                 updateStudentForm.save()
                 messages.success(request, 'Updation Success')
-                return redirect('home')
+                return redirect('checkattendance')
         except:
             messages.error(request, 'Updation Unsucessfull')
-            return redirect('home')
+            return redirect('checkattendance')
     return render(request, 'attendence_sys/student_update.html', context)
 
 
@@ -107,7 +91,7 @@ def takeAttendence(request):
             }
         if Attendence.objects.filter(date = str(date.today()),branch = details['branch'], year = details['year'], section = details['section'],period = details['period']).count() != 0 :
             messages.error(request, "Attendence already recorded.")
-            return redirect('home')
+            return redirect('checkattendance')
         else:
             students = Student.objects.filter(branch = details['branch'], year = details['year'], section = details['section'])
             names = Recognizer(details)
@@ -168,14 +152,39 @@ def checkAttendance(request):
             studentForm.save()
             name = studentForm.cleaned_data.get('firstname') +" " +studentForm.cleaned_data.get('lastname')
             messages.success(request, 'Student ' + name + ' was successfully added.')
-            return redirect('home')
+            return redirect('checkattendance')
         else:
             messages.error(request, 'Student with Registration Id '+request.POST['registration_id']+' already exists.')
-            return redirect('home')
+            return redirect('checkattendance')
 
     context = {'studentForm':studentForm}
-    context = {}
     return render(request, 'attendence_sys/check-attendance.html', context)
+
+@login_required(login_url = 'login')
+def students(request):
+    context = {}
+    return render(request, 'attendence_sys/students/students.html', context)
+
+@login_required(login_url = 'login')
+def teachers(request):
+    context = {}
+    return render(request, 'attendence_sys/teachers/teachers.html', context)
+
+@login_required(login_url = 'login')
+def profile(request):
+    context = {}
+    return render(request, 'attendence_sys/profile.html', context)
+
+@login_required(login_url = 'login')
+def studentsList(request):
+    context = {}
+    return render(request, 'attendence_sys/students/student_list.html', context)
+
+@login_required(login_url = 'login')
+def teachersList(request):
+    context = {}
+    return render(request, 'attendence_sys/teachers/teachers_list.html', context)
+
 
 
 
