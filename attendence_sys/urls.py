@@ -6,8 +6,9 @@ urlpatterns = [
     path('', views.home, name = 'home'),
     path('login/', views.loginPage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
+    path('register/', views.register, name='register'),
     path('searchattendence/', views.searchAttendence, name='searchattendence'),
-    path('account/', views.facultyProfile, name='account'),
+    # path('account/', views.facultyProfile, name='account'),
 
     path('updateStudentRedirect/', views.updateStudentRedirect, name='updateStudentRedirect'),
     path('updateStudent/', views.updateStudent, name='updateStudent'),

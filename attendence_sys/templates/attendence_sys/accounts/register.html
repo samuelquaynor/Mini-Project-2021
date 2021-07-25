@@ -1,11 +1,12 @@
-{% extends 'layouts/base-fullscreen.html' %}
+{% extends 'attendence_sys/layouts/base-fullscreen.html' %}
 
-{% block title %} Register {% endblock title %}
+{% block title %} Login {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+
 
     <!-- Page content -->
     <div class="container mt--8 pb-5">
@@ -55,6 +56,67 @@
                     </div>
                   </div>
                   <span class="text-error">{{ form.email.errors }}</span>
+
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      {{ form.firstname }}
+                    </div>
+                  </div>
+                  <span class="text-error">{{ form.firstname.errors }}</span>
+
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      {{ form.lastname }}
+                    </div>
+                  </div>
+                  <span class="text-error">{{ form.lastname.errors }}</span>
+
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      {{ form.registration_id }}
+                    </div>
+                  </div>
+                  <span class="text-error">{{ form.registration_id.errors }}</span>
+
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      {{ form.faculty }}
+                    </div>
+                  </div>
+                  <span class="text-error">{{ form.faculty.errors }}</span>
+
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      {{ form.department }}
+                    </div>
+                  </div>
+                  <span class="text-error">{{ form.department.errors }}</span>
+
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      {{ form.course }}
+                    </div>
+                  </div>
+                  <span class="text-error">{{ form.course.errors }}</span>
+                  
 
                   <div class="form-group">
                     <div class="input-group input-group-alternative">

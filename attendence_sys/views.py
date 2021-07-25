@@ -42,6 +42,31 @@ def loginPage(request):
 
     return render(request, "attendence_sys/accounts/login.html", {"form": form, "msg" : msg})
 
+def register(request):
+
+    msg     = None
+    success = False
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=raw_password)
+
+            msg     = 'User created - please <a href="/login">login</a>.'
+            success = True
+            
+            #return redirect("/login/")
+
+        else:
+            msg = 'Form is not valid'    
+    else:
+        form = SignUpForm()
+
+    return render(request, "attendence_sys/accounts/register.html", {"form": form, "msg" : msg, "success" : success })
+
 @login_required(login_url = 'login')
 def logoutUser(request):
     logout(request)
@@ -128,11 +153,11 @@ def searchAttendence(request):
     return render(request, 'attendence_sys/attendence.html', context)
 
 
-def facultyProfile(request):
-    faculty = request.user.faculty
-    form = FacultyForm(instance = faculty)
-    context = {'form':form}
-    return render(request, 'attendence_sys/facultyForm.html', context)
+# def facultyProfile(request):
+#     faculty = request.user.faculty
+#     form = FacultyForm(instance = faculty)
+#     context = {'form':form}
+#     return render(request, 'attendence_sys/facultyForm.html', context)
 
 
 @login_required(login_url = 'login')
