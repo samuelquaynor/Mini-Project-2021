@@ -204,7 +204,7 @@ def profile(request):
 @login_required(login_url = 'login')
 def studentsList(request):
     students = Teacher.objects.get(username=request.user.username).students.all()
-    context = {'students': students}
+    context = {'students': students.values}
     return render(request, 'attendence_sys/students/student_list.html', context)
 
 @login_required(login_url = 'login')

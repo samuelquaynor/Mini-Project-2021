@@ -116,7 +116,7 @@ class Student(models.Model):
     )
     Department = (
         ('Select Department','Select Department'),
-        ('Department of Agricultural Economics, Agribusiness and Extension','Department of Agricultural Economics, Agribusiness and Extension'),
+        ('Department of Agricultural Economics','Department of Agricultural Economics'),
         ('Department of Animal Science','Department of Animal Science'),
         ('Department of Horticulture','Department of Horticulture'),
     )
@@ -148,8 +148,8 @@ class Student(models.Model):
     profile_pic = models.ImageField(upload_to=student_directory_path ,null=True, blank=True)
 
 
-    def __str__(self):
-        return str([self.registration_id, self.firstname, self.lastname, self.date, self.course, self.teacher, self.year, self.faculty, self.department])
+    def students(self):
+        return [self.registration_id, self.firstname, self.lastname, self.date, self.course, self.teacher, self.year, self.faculty, self.department]
 
 
 class Attendence(models.Model):
