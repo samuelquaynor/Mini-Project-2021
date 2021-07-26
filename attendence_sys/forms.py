@@ -95,6 +95,7 @@ class SignUpForm(UserCreationForm):
             }),
         choices=Teacher.Course
     )
+
     password1 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={

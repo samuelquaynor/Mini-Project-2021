@@ -60,19 +60,22 @@ class CustomAccountManager(BaseUserManager):
         user.save()
         return user
 
-class Teacher(AbstractBaseUser, PermissionsMixin):
+class Teacher(AbstractBaseUser, PermissionsMixin, models.Model):
 
     Faculty = (
+        ('Select Faculty','Select Faculty'),
         ('Faculty of Agriculture','Faculty of Agriculture'),
         ('Faculty of Renewable Natural Resources','Faculty of Renewable Natural Resources'),
         ('Faculty of Built Environment','Faculty of Built Environment'),
     )
     Department = (
-        ('Department of Agricultural Economics, Agribusiness and Extension','Department of Agricultural Economics, Agribusiness and Extension'),
+        ('Select Department','Select Department'),
+        ('Department of Agricultural Economics','Department of Agricultural Economics'),
         ('Department of Animal Science','Department of Animal Science'),
         ('Department of Horticulture','Department of Horticulture'),
     )
     Course = (
+        ('Select Course','Select Course'),
         ('BSc Agriculture (Economics Option)','BSc Agriculture (Economics Option)'),
         ('BSc Agriculture (Extension Option)','BSc Agriculture (Extension Option)'),
         ('BSc Agribusiness Management','BSc Agribusiness Management'),
@@ -83,10 +86,10 @@ class Teacher(AbstractBaseUser, PermissionsMixin):
     firstname = models.CharField(max_length=200, null=True)
     lastname = models.CharField(max_length=200, null=True, blank=True)
     registration_id = models.CharField(max_length=200, null=True)
-    course = models.CharField(max_length=100, null=True, choices=Course)
-    date = models.DateField(auto_now_add = True, null = True)
     faculty = models.CharField(max_length=100, null=True, choices=Faculty)
     department = models.CharField(max_length=100, null=True, choices=Department)
+    course = models.CharField(max_length=100, null=True, choices=Course)
+    date = models.DateField(auto_now_add = True, null = True)
     profile_pic = models.ImageField(upload_to=student_directory_path ,null=True, blank=True)
     about = models.TextField(_('about'), max_length=500, blank=True)
     is_staff = models.BooleanField(default=False)
@@ -95,7 +98,10 @@ class Teacher(AbstractBaseUser, PermissionsMixin):
     objects = CustomAccountManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'firstname', 'lastname', 'registration_id', 'course', 'faculty', 'department']
+    REQUIRED_FIELDS = ['email', 'firstname', 'lastname', 'registration_id', 'faculty', 'department', 'course',]
+
+    class Meta:
+        verbose_name_plural = "Teachers" 
 
     def __str__(self):
         return str(self.username)
@@ -103,16 +109,19 @@ class Teacher(AbstractBaseUser, PermissionsMixin):
 class Student(models.Model):
 
     Faculty = (
+        ('Select Faculty','Select Faculty'),
         ('Faculty of Agriculture','Faculty of Agriculture'),
         ('Faculty of Renewable Natural Resources','Faculty of Renewable Natural Resources'),
         ('Faculty of Built Environment','Faculty of Built Environment'),
     )
     Department = (
+        ('Select Department','Select Department'),
         ('Department of Agricultural Economics, Agribusiness and Extension','Department of Agricultural Economics, Agribusiness and Extension'),
         ('Department of Animal Science','Department of Animal Science'),
         ('Department of Horticulture','Department of Horticulture'),
     )
     Course = (
+        ('Select Course','Select Course'),
         ('BSc Agriculture (Economics Option)','BSc Agriculture (Economics Option)'),
         ('BSc Agriculture (Extension Option)','BSc Agriculture (Extension Option)'),
         ('BSc Agribusiness Management','BSc Agribusiness Management'),
@@ -132,6 +141,7 @@ class Student(models.Model):
     registration_id = models.CharField(max_length=200, null=True)
     date = models.DateField(auto_now_add = True, null = True)
     course = models.CharField(max_length=100, null=True, choices=Course)
+    teacher = models.ForeignKey(Teacher, related_name="students", null=True, on_delete=models.CASCADE)
     year = models.CharField(max_length=100, null=True, choices=YEAR)
     faculty = models.CharField(max_length=100, null=True, choices=Faculty)
     department = models.CharField(max_length=100, null=True, choices=Department)
@@ -139,7 +149,8 @@ class Student(models.Model):
 
 
     def __str__(self):
-        return str(self.registration_id)
+        return str([self.registration_id, self.firstname, self.lastname, self.date, self.course, self.teacher, self.year, self.faculty, self.department])
+
 
 class Attendence(models.Model):
     # faculty = models.ForeignKey(Faculty, null = True, on_delete= models.SET_NULL)

@@ -187,6 +187,7 @@ def checkAttendance(request):
 
 @login_required(login_url = 'login')
 def students(request):
+    students
     context = {}
     return render(request, 'attendence_sys/students/students.html', context)
 
@@ -202,7 +203,8 @@ def profile(request):
 
 @login_required(login_url = 'login')
 def studentsList(request):
-    context = {}
+    students = Teacher.objects.get(username=request.user.username).students.all()
+    context = {'students': students}
     return render(request, 'attendence_sys/students/student_list.html', context)
 
 @login_required(login_url = 'login')
