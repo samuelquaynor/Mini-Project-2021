@@ -18,9 +18,13 @@
 		<div class="card card-body">
 
 			<center>
-				<form method="get">
-					{{myFilter.form}}
-
+				<form class="form-group" method="get">
+					<div class="input-group input-group-alternative mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+						</div>
+						{{myFilter.form}}
+					</div>
 		    		<button class="btn btn-primary" type="submit">Search</button>
 				</form>
 			</center>

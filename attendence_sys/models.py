@@ -155,13 +155,13 @@ class Student(models.Model):
 class Attendence(models.Model):
     # faculty = models.ForeignKey(Faculty, null = True, on_delete= models.SET_NULL)
     # student = models.ForeignKey(Student, null = True, on_delete= models.SET_NULL)
-    Faculty_Name = models.CharField(max_length=200, null=True, blank=True)
     Student_ID = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateField(auto_now_add = True, null = True)
     time = models.TimeField(auto_now_add=True, null = True)
-    branch = models.CharField(max_length=200, null = True)
+    faculty = models.CharField(max_length=200, null = True)
+    department = models.CharField(max_length=200, null = True)
+    course = models.CharField(max_length=200, null = True)
     year = models.CharField(max_length=200, null = True)
-    section = models.CharField(max_length=200, null = True)
     period = models.CharField(max_length=200, null = True)
     status = models.CharField(max_length=200, null = True, default='Absent')
 
