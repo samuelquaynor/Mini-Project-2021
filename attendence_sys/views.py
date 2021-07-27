@@ -90,7 +90,7 @@ def updateStudentRedirect(request):
                        'prev_reg_id': reg_id, 'student': student}
         except:
             messages.error(request, 'Student Not Found')
-            return redirect('checkattendance')
+            return redirect( 'attendence')
     return render(request, 'attendence_sys/student_update.html', context)
 
 
@@ -105,10 +105,10 @@ def updateStudent(request):
             if updateStudentForm.is_valid():
                 updateStudentForm.save()
                 messages.success(request, 'Updation Success')
-                return redirect('checkattendance')
+                return redirect('attendence')
         except:
             messages.error(request, 'Updation Unsucessfull')
-            return redirect('checkattendance')
+            return redirect('attendence')
     context = {}
     return render(request, 'attendence_sys/student_update.html', context)
 
@@ -125,7 +125,7 @@ def takeAttendence(request):
         }
         if Attendence.objects.filter(date=str(date.today()), faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'], period=details['period']).count() != 0:
             messages.error(request, "Attendence already recorded.")
-            return redirect('checkattendance')
+            return redirect('attendence')
         else:
             students = Student.objects.filter(
                 faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'])
@@ -181,8 +181,9 @@ def searchAttendence(request):
 
 @login_required(login_url='login')
 def students(request):
-    students
-    context = {}
+    students = Teacher.objects.get(
+        username=request.user.username).students.all()
+    context = {'students': students.values}
     return render(request, 'attendence_sys/students/students.html', context)
 
 
@@ -198,12 +199,12 @@ def profile(request):
     return render(request, 'attendence_sys/profile.html', context)
 
 
-@login_required(login_url='login')
-def studentsList(request):
-    students = Teacher.objects.get(
-        username=request.user.username).students.all()
-    context = {'students': students.values}
-    return render(request, 'attendence_sys/students/student_list.html', context)
+# @login_required(login_url='login')
+# def studentsList(request):
+#     students = Teacher.objects.get(
+#         username=request.user.username).students.all()
+#     context = {'students': students.values}
+#     return render(request, 'attendence_sys/students/student_list.html', context)
 
 
 @login_required(login_url='login')
@@ -232,7 +233,7 @@ def addStudent(request):
                 'firstname') + " " + studentForm.cleaned_data.get('lastname')
             messages.success(request, 'Student ' + name +
                              ' was successfully added.')
-            return redirect('checkattendance')
+            return redirect('attendence')
         else:
             messages.error(request, 'Student with Registration Id ' +
                            request.POST['registration_id']+' already exists.')

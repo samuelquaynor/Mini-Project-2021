@@ -24,7 +24,7 @@
             </nav> -->
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <a  href="{% url 'studentList' %}" class="btn btn-sm btn-neutral">Total Attendance: 7000</a>
+                    <a  href="{% url 'searchattendence' %}" class="btn btn-sm btn-neutral">Total Student: {{students|length}}</a>
                 </div>
             </div>
             <!-- Card stats -->
@@ -35,8 +35,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <a href="{% url 'studentList' %}">
-                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">350,897</span>
+                                    <a href="{% url 'searchattendence' %}">
+                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">0</span>
                                         <h5 class="card-title text-uppercase text-muted mb-0">Today's Attendance</h5>
                                     </a>
                                 </div>
@@ -59,8 +59,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <a href="{% url 'studentList' %}">
-                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">2,356</span>
+                                    <a href="{% url 'searchattendence' %}">
+                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">0</span>
                                         <h5 class="card-title text-uppercase text-muted mb-0">Male Attendance</h5>
                                     </a>
                                 </div>
@@ -83,8 +83,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <a href="{% url 'studentList' %}">
-                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">924</span>
+                                    <a href="{% url 'searchattendence' %}">
+                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">0</span>
                                         <h5 class="card-title text-uppercase text-muted mb-0">Female Attendance</h5>
                                     </a>
                                 </div>
@@ -107,8 +107,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <a href="{% url 'studentList' %}">
-                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">49,65%</span>
+                                    <a href="{% url 'searchattendence' %}">
+                                        <span class="h1 font-weight-bold mb-0" style="font-weight: 900;">0</span>
                                         <h5 class="card-title text-uppercase text-muted mb-0">Total Absence</h5>
                                     </a>
                                 </div>
@@ -133,46 +133,100 @@
 
 <div class="container-fluid mt--6">
     <div class="row">
-        <div class="col-xl-12">
-            <div class="card bg-white">
-                <div class="card-header bg-transparent">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="text-dark text-uppercase ls-1 mb-1">Overview</h6>
-                            <h5 class="h3 text-dark mb-0">Sales value</h5>
-                        </div>
-                        <div class="col">
-                            <ul class="nav nav-pills justify-content-end">
-                                <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark"
-                                    data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}'
-                                    data-prefix="$" data-suffix="k">
-                                    <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                                        <span class="d-none d-md-block">Month</span>
-                                        <span class="d-md-none">M</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item" data-toggle="chart" data-target="#chart-sales-dark"
-                                    data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}'
-                                    data-prefix="$" data-suffix="k">
-                                    <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                                        <span class="d-none d-md-block">Week</span>
-                                        <span class="d-md-none">W</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Students</h3>
                 </div>
-                <div class="card-body">
-                    <!-- Chart -->
-                    <div class="chart">
-                        <!-- Chart wrapper -->
-                        <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
-                    </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="name">Name</th>
+                                <th scope="col" class="sort" data-sort="id">ID</th>
+                                <th scope="col" class="sort" data-sort="course">Course</th>
+                                <th scope="col" class="sort" data-sort="department">Deparment</th>
+                                <th scope="col" class="sort" data-sort="faculty">Faculty</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for student in students %}
+                            <tr>
+                                <th scope="row">
+                                    <div class="media align-items-center">
+                                        <a href="#" class="avatar rounded-circle mr-3">
+                                            <img alt="Image placeholder" src="{{ student.profile_pic.url }}">
+                                        </a>
+                                        <div class="media-body">
+                                        <span class="name mb-0 text-sm">{{ student.firstname }} {{ student.lastname }}</span>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td>
+                                    {{ student.registration_id}}
+                                </td>
+                                <td>
+                                    {{ student.course }}
+                                </td>
+                                <td>
+                                    {{ student.department }}
+                                </td>
+                                <td>
+                                    {{ student.faculty }}
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
+                <!-- Card footer -->
+                <!-- <div class="card-footer py-4">
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">
+                                    <i class="fas fa-angle-left"></i>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="fas fa-angle-right"></i>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div> -->
             </div>
         </div>
     </div>
+
+    {% include "attendence_sys/includes/footer.html" %}
+
 </div>
 
 {% endblock content %}

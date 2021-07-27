@@ -1,34 +1,91 @@
 {% extends 'attendence_sys/main.html' %}
 {% block content %}
 {% for message in messages %}
-        {% if message.tags == 'error' %}
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% else %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endif %}
-	{% endfor %}
+{% if message.tags == 'error' %}
+<div class="alert alert-danger">
+	{{ message }}
+</div>
+{% else %}
+<div class="alert alert-success">
+	{{ message }}
+</div>
+{% endif %}
+{% endfor %}
 {% if ta == False %}
-<center><h1>Search Attendence</h1></center>
-<div class="row">
-	<div class="col">
-		<div class="card card-body">
+<div class="row justify-content-center mt-5">
+	<div class="col-lg-8 col-md-8">
+		<div class="card bg-white shadow border-0">
+			<div class="card-body px-lg-5 py-lg-5">
+				<div class="text-center h3 text-muted mb-4">
 
-			<center>
-				<form class="form-group" method="get">
-					<div class="input-group input-group-alternative mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+					{% if msg %}
+					<small>{{ msg | safe }}</small>
+					{% else %}
+					Search Attendance
+					{% endif %}
+
+				</div>
+
+				{% if not success %}
+
+				<form method="POST">
+
+					{% csrf_token %}
+
+					<div class="form-group">
+						<label class="control-label h5 text-muted">Enter Student ID:</label>
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+							</div>
+							{{ myFilter.form.Student_ID }}
 						</div>
-						{{myFilter.form}}
 					</div>
-		    		<button class="btn btn-primary" type="submit">Search</button>
+					<span class="text-error">{{ myFilter.form.Student_ID.errors }}</span>
+
+					<div class="form-group">
+						<label class="control-label h5 text-muted">Enter Date:</label>
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="ni ni-email-83"></i></span>
+							</div>
+							{{ myFilter.form.date  }}
+						</div>
+					</div>
+					<span class="text-error">{{ myFilter.form.date.errors }}</span>
+
+					<div class="form-group">
+						<label class="control-label h5 text-muted">Enter Year:</label>
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="ni ni-email-83"></i></span>
+							</div>
+							{{ myFilter.form.year }}
+						</div>
+					</div>
+					<span class="text-error">{{ myFilter.form.year.errors }}</span>
+
+					<div class="form-group">
+						<label class="control-label h5 text-muted">Enter Period:</label>
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="ni ni-email-83"></i></span>
+							</div>
+							{{ myFilter.form.period }}
+						</div>
+					</div>
+					<span class="text-error">{{ myFilter.form.period.errors }}</span>
+
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary mt-4">Search Student</button>
+					</div>
 				</form>
-			</center>
+
+				{% endif %}
+
+			</div>
 		</div>
+
 	</div>
 </div>
 <br>
@@ -39,9 +96,10 @@
 			<table class="table table-sm">
 				<tr>
 					<th>Student ID</th>
-					<th>Branch</th>
-					<th>Year</th>
-					<th>Section</th>
+					<th>Faculty</th>
+					<!-- <th>Department</th> -->
+					<th>Course</th>
+					<th>year</th>
 					<th>Period</th>
 					<th>Status</th>
 				</tr>
@@ -49,10 +107,11 @@
 				{% for attendence in attendences %}
 
 				<tr>
-                    <td>{{ attendence.Student_ID }}</td>
-					<td>{{ attendence.branch }}</td>
+					<td>{{ attendence.Student_ID }}</td>
+					<td>{{ attendence.faculty }}</td>
+					<!-- <td>{{ attendence.Department }}</td> -->
+					<td>{{ attendence.course }}</td>
 					<td>{{ attendence.year }}</td>
-					<td>{{ attendence.section }}</td>
 					<td>{{ attendence.period }}</td>
 					<td>{{ attendence.status }}</td>
 				</tr>
@@ -63,36 +122,40 @@
 	</div>
 </div>
 {% else %}
-	<center><h1>Present Period Attendence</h1></center>
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="card card-body">
-				<table class="table table-sm">
-					<tr>
-						<th>Student ID</th>
-						<th>Branch</th>
-						<th>Year</th>
-						<th>Section</th>
-						<th>Period</th>
-						<th>Status</th>
-					</tr>
-	
-					{% for attendence in attendences %}
-	
-					<tr>
-						<td>{{ attendence.Student_ID }}</td>
-						<td>{{ attendence.branch }}</td>
-						<td>{{ attendence.year }}</td>
-						<td>{{ attendence.section }}</td>
-						<td>{{ attendence.period }}</td>
-						<td>{{ attendence.status }}</td>
-					</tr>
-					{% endfor %}
-	
-				</table>
-			</div>
+<center>
+	<h1>Present Period Attendence</h1>
+</center>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Student ID</th>
+					<th>Faculty</th>
+					<th>Department</th>
+					<th>Course</th>
+					<th>year</th>
+					<th>Period</th>
+					<th>Status</th>
+				</tr>
+
+				{% for attendence in attendences %}
+
+				<tr>
+					<td>{{ attendence.Student_ID }}</td>
+					<td>{{ attendence.faculty }}</td>
+					<td>{{ attendence.department }}</td>
+					<td>{{ attendence.course }}</td>
+					<td>{{ attendence.year }}</td>
+					<td>{{ attendence.period }}</td>
+					<td>{{ attendence.status }}</td>
+				</tr>
+				{% endfor %}
+
+			</table>
 		</div>
 	</div>
+</div>
 {% endif %}
 
 

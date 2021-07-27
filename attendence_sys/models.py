@@ -29,7 +29,7 @@ def student_directory_path(instance, filename):
     name, ext = filename.split(".")
     name = instance.registration_id # + "_" + instance.branch + "_" + instance.year + "_" + instance.section
     filename = name +'.'+ ext 
-    return 'Student_Images/{}/{}/{}/{}'.format(instance.branch,instance.year,instance.section,filename)
+    return 'Student_Images/{}/{}/{}/{}'.format(instance.course,instance.year,instance.faculty,filename)
 
 class CustomAccountManager(BaseUserManager):
 
