@@ -7,16 +7,37 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	  <!-- Favicon - loaded as static -->
+	  <!-- Fonts -->
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+	  <!-- Icons -->
+	  <link rel="stylesheet" href="/static/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+	  <link rel="stylesheet" href="/static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+	  <!-- Page plugins -->
+	  <!-- Argon CSS -->
+	  <link rel="stylesheet" href="/static/assets/css/argon.css?v=1.2.0" type="text/css">
+	
+	  <!-- Specific CSS goes HERE -->
+	  {% block stylesheets %}{% endblock stylesheets %}
+	
 </head>
 <body>
-	{%  include 'attendence_sys/navbar.html' %}
-	<br>
-<br>
-<br>
-	<div class="container-fluid">
-	{% block content %}
+	{% include "attendence_sys/includes/sidenav.html" %}
 
-	{% endblock %}
-    </div>
+	<div class="main-content" id="panel">
+
+		{% include "attendence_sys/includes/navigation.html" %}
+	
+		{% block content %}{% endblock content %}
+	
+	  </div>
+
+	  {% include "attendence_sys/includes/scripts.html" %}
+
+	  <!-- Specific JS goes HERE --> 
+	  {% block javascripts %}{% endblock javascripts %}
+	
+	  <script src="/static/assets/js/argon.js?v=1.2.0"></script>
+k
 </body>
 </html>

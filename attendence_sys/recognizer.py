@@ -18,7 +18,7 @@ def Recognizer(details):
 	base_dir = os.path.dirname(os.path.abspath(__file__))
 	# os.chdir("..")
 	base_dir = os.getcwd()
-	image_dir = os.path.join(base_dir,"{}\{}\{}\{}\{}\{}".format('static','images','Student_Images',details['branch'],details['year'],details['section']))
+	image_dir = os.path.join(base_dir,"{}\{}\{}\{}\{}\{}".format('static','images','Student_Images',details['course'],details['year'],details['faculty']))
 	# print(image_dir)
 	names = []
 

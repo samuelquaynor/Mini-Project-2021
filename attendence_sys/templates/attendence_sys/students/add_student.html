@@ -1,0 +1,207 @@
+{% extends 'attendence_sys/main.html' %}
+
+{% block title %} Attendance {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- <div class="col-md-6" style="margin-top: 20px;">
+    <div class="card card-body">
+        <center><h3>Add Student</h3></center>
+        <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Enter First Name:</label>
+                        {{ studentForm.firstname }}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Enter Last Name:</label>
+                        {{ studentForm.lastname }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Enter Registration ID:</label>
+                        {{ studentForm.registration_id }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="sel1">Select Branch:</label>
+                        {{ studentForm.faculty }}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="sel1">Select Year:</label>
+                        {{ studentForm.department }}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="sel1">Select Section:</label>
+                        {{ studentForm.course }}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="sel1">Select Section:</label>
+                        {{ studentForm.year }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="form-group" style="border: none;">
+                        <label class="control-label">Upload Profile Picture:</label>
+                        {{ studentForm.profile_pic }}
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <button type="submit" class="btn btn-block btn-info">Submit</button>    
+        </form>
+    </div>
+</div> -->
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8 col-md-8">
+        <div class="card bg-white shadow border-0">
+            <div class="card-body px-lg-5 py-lg-5">
+                <div class="text-center h3 text-muted mb-4">
+
+                    {% if msg %}
+                    <small>{{ msg | safe }}</small>
+                    {% else %}
+                    Add Student
+                    {% endif %}
+
+                </div>
+
+                {% if not success %}
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label class="control-label h5  text-muted">Enter First Name:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                            </div>
+                            {{ studentForm.firstname }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.firstname.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Enter Last Name:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.lastname  }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.lastname.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Enter Registration ID:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.registration_id }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.registration_id.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Enter Faculty:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.faculty }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.faculty.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Enter Deparment:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.department }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.department.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Enter Course:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.course  }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.course.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Enter Year:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.year }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.year.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Select Teacher:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.teacher }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.teacher.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Upload Profile Picture:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ studentForm.profile_pic }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.profile_pic.errors }}</span>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary mt-4">Create Student</button>
+                    </div>
+                </form>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

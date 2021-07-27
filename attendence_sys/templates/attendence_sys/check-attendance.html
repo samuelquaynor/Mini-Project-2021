@@ -1,0 +1,142 @@
+{% extends 'attendence_sys/main.html' %}
+
+{% block title %} Attendance {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <!-- <h6 class="h2 text-white d-inline-block mb-0">Students</h6> -->
+                    <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tables</li>
+                        </ol>
+                    </nav> -->
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="{% url 'searchattendence' %}" class="btn btn-sm btn-neutral">Search Attendance</a>
+                    <!-- <a href="#" class="btn btn-sm btn-neutral">Update Student</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="row justify-content-center">
+        <div class="col-md-8" style="margin-top: 50px;">
+            <div class="card card-body">
+                <center><h3>Take Attendence</h3></center>
+                <form class="form-horizontal" action="{% url 'attendence' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="sel1" class="control-label h5 text-muted">Select Faculty</label>:</label>
+                        <select name='faculty' class="form-control input-group input-group-alternative mb-3" id="sel1">
+                            <option value="Faculty of Agriculture">Faculty of Agriculture</option>
+                            <option value="Faculty of Renewable Natural Resources">Faculty of RenewableNatural Resources</option>
+                            <option value="Faculty of Built Environment">Faculty of Built Environment</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1" class="control-label h5 text-muted">Select Department</label>:</label>
+                        <select name='department' class="form-control input-group input-group-alternative mb-3" id="sel1">
+                            <option value="Department of Agricultural Economics">Department of Agricultural Economics</option>
+                            <option value="Department of Animal Science">Department of Animal Science</option>
+                            <option value="Department of Horticulture">Department of Horticulture</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1" class="control-label h5 text-muted">Select Course</label>:</label>
+                        <select name='course' class="form-control input-group input-group-alternative mb-3" id="sel1">
+                            <option value="BSc Agriculture (Economics Option)">BSc Agriculture (Economics Option)</option>
+                            <option value="BSc Agriculture (Extension Option)">Faculty of Renewable Natural Resources</option>
+                            <option value="BSc Agribusiness Management">BSc Agribusiness Management</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1" class="control-label h5 text-muted">Select Year:</label>
+                        <select name='year' class="form-control input-group input-group-alternative mb-3" id="sel1">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1" class="control-label h5 text-muted">Select Period:</label>
+                        <select name='period' class="form-control input-group input-group-alternative mb-3" id="sel1">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-info">Take Attendence</button>
+                </form>
+            </div>
+        </div>
+        <!-- <div class="col-md-6" style="margin-top: 20px;;">
+            <div class="card card-body">
+                <center><h3>Search Attendence</h3></center>
+                    <a href="{% url 'searchattendence' %}" class="btn btn-block btn-info">Click Here</a>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- <div class="row">
+        
+        <div class="col-md-6" style="margin-top: 20px;">
+            <div class="card card-body">
+                <center><h3>Update Student Details</h3></center>
+                <form class="form-horizontal" action="{% url 'updateStudentRedirect' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="control-label">Enter Student Registration ID:</label>
+                        <input name="reg_id" type="text" class="form-control" placeholder="Ex: 18341A1234">
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1">Select Branch:</label>
+                        <select name='branch' class="form-control" id="sel1">
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EEE</option>
+                            <option value="MECH">MECH</option>
+                            <option value="CHEM">CHEM</option>
+                            <option value="CIVIL">CIVIL</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-info">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div> -->
+</div>
+
+{% endblock content %}
