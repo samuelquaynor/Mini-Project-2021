@@ -2,35 +2,84 @@
 {% block content %}
 
 <style>
-	.profile-pic{
-		max-width: 200px;
-		max-height:200px;
-		margin: 0 auto;
-		border-radius: 50%;
-	}
+    .profile-pic {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
 </style>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card card-body">
-                    <a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Home</a>
-                    <hr>
-                    <h3 style="text-align: center">Student Profile Pic</h3>
-                    <hr>
-                    <img class="img-responsive profile-pic" src="{{ student.profile_pic.url }}" >
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <!-- <h6 class="h2 text-white d-inline-block mb-0">Students</h6> -->
+                    <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tables</li>
+                        </ol>
+                    </nav> -->
                 </div>
-            </div>
-            <div class="col-md-9">
-                <form action="{% url 'updateStudent' %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group" style="visibility: hidden !important;margin-top: -40px;">
-                        <input type="text" class="form-control" value="{{ prev_reg_id }}" name="prev_reg_id">
-                    </div>
-                    {{ form.as_p }}
-                    <input class="btn btn-primary" type="submit" name="Update Information">
-                </form>
+                <div class="col-lg-6 col-5 text-right">
+                    <!-- <a href="{% url 'searchattendence' %}" class="btn btn-sm btn-neutral">Search Attendance</a> -->
+                    <!-- <a href="#" class="btn btn-sm btn-neutral">Update Student</a> -->
+                </div>
             </div>
         </div>
     </div>
+</div>
+{% if forms %}
+<div class="row justify-content-center  mt--6">
+    <div class="col-md-8" style="margin-top: 50px;">
+        <div class="card card-body">
+            <center>
+                <h3>Update Student Details</h3>
+            </center>
+            <form class="form-horizontal" action="{% url 'updateStudentRedirect' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label h5 text-muted">Enter Student Registration ID:</label>
+                    <input name="reg_id" type="text" class="form-control input-group input-group-alternative mb-3" placeholder="Ex: 18341A1234">
+                </div>
+                <div class="form-group">
+                    <label for="sel1" class="control-label h5 text-muted">Select Course</label>:</label>
+                    <select name='course' class="form-control input-group input-group-alternative mb-3" id="sel1">
+                        <option value="BSc Agriculture (Economics Option)">BSc Agriculture (Economics Option)</option>
+                        <option value="BSc Agriculture (Extension Option)">BSc Agriculture (Extension Option)"></option>
+                        <option value="BSc Agribusiness Management">BSc Agribusiness Management</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-block btn-info">Submit</button>
+            </form>
+        </div>
+    </div></div>
+{% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card card-body">
+                <a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Home</a>
+                <hr>
+                <h3 style="text-align: center">Student Profile Pic</h3>
+                <hr>
+                <img class="img-responsive profile-pic" src="{{ student.profile_pic.url }}">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <form action="{% url 'updateStudent' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group" style="visibility: hidden !important;margin-top: -40px;">
+                    <input type="text" class="form-control" value="{{ prev_reg_id }}" name="prev_reg_id">
+                </div>
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" name="Update Information">
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}

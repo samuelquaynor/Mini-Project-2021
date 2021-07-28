@@ -78,13 +78,14 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def updateStudentRedirect(request):
-    context = {}
+    forms = False
+    context = {'forms': forms}
     if request.method == 'POST':
         try:
             reg_id = request.POST['reg_id']
-            branch = request.POST['branch']
+            course = request.POST['course']
             student = Student.objects.get(
-                registration_id=reg_id, branch=branch)
+                registration_id=reg_id, course=course)
             updateStudentForm = CreateStudentForm(instance=student)
             context = {'form': updateStudentForm,
                        'prev_reg_id': reg_id, 'student': student}
@@ -96,6 +97,7 @@ def updateStudentRedirect(request):
 
 @login_required(login_url='login')
 def updateStudent(request):
+    forms = True
     if request.method == 'POST':
         try:
             student = Student.objects.get(
@@ -109,7 +111,7 @@ def updateStudent(request):
         except:
             messages.error(request, 'Updation Unsucessfull')
             return redirect('attendence')
-    context = {}
+    context = {'forms': forms}
     return render(request, 'attendence_sys/student_update.html', context)
 
 
