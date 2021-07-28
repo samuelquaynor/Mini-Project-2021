@@ -95,6 +95,13 @@ class SignUpForm(UserCreationForm):
             }),
         choices=Teacher.Course
     )
+    course = forms.ChoiceField(
+        widget=forms.Select(
+            attrs={               
+                "class": "form-control"
+            }),
+        choices=Teacher.GENDER
+    )
 
     is_active = forms.BooleanField()
 
@@ -115,7 +122,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = Teacher
-        fields = ('username', 'email','firstname', 'lastname','registration_id', 'faculty','department','is_active', 'password1', 'password2')
+        fields = ('username', 'email','firstname', 'lastname','registration_id', 'faculty','department','is_active', 'gender', 'password1', 'password2')
 
     def save(self, commit=True):
         teacher = super(SignUpForm, self).save(commit=False)

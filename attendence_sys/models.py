@@ -80,6 +80,10 @@ class Teacher(AbstractBaseUser, PermissionsMixin, models.Model):
         ('BSc Agriculture (Extension Option)','BSc Agriculture (Extension Option)'),
         ('BSc Agribusiness Management','BSc Agribusiness Management'),
     )
+    GENDER = (
+        ('MALE','MALE'),
+        ('FEMALE','FEMALE'),
+    )
 
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=150, unique=True)
@@ -89,6 +93,7 @@ class Teacher(AbstractBaseUser, PermissionsMixin, models.Model):
     faculty = models.CharField(max_length=100, null=True, choices=Faculty)
     department = models.CharField(max_length=100, null=True, choices=Department)
     course = models.CharField(max_length=100, null=True, choices=Course)
+    gender = models.CharField(max_length=100, null=True, choices=GENDER)
     date = models.DateField(auto_now_add = True, null = True)
     profile_pic = models.ImageField(upload_to=student_directory_path ,null=True, blank=True)
     about = models.TextField(_('about'), max_length=500, blank=True)
@@ -98,7 +103,7 @@ class Teacher(AbstractBaseUser, PermissionsMixin, models.Model):
     objects = CustomAccountManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'firstname', 'lastname', 'registration_id', 'faculty', 'department', 'course',]
+    REQUIRED_FIELDS = ['email', 'firstname', 'lastname', 'registration_id', 'faculty', 'department', 'course', 'gender']
 
     class Meta:
         verbose_name_plural = "Teachers" 
@@ -135,6 +140,10 @@ class Student(models.Model):
         ('6','6'),
         ('7','7'),
     )
+    GENDER = (
+        ('MALE','MALE'),
+        ('FEMALE','FEMALE'),
+    )
 
     firstname = models.CharField(max_length=200, null=True, blank=True)
     lastname = models.CharField(max_length=200, null=True, blank=True)
@@ -143,13 +152,14 @@ class Student(models.Model):
     course = models.CharField(max_length=100, null=True, choices=Course)
     teacher = models.ForeignKey(Teacher, related_name="students", null=True, on_delete=models.CASCADE)
     year = models.CharField(max_length=100, null=True, choices=YEAR)
+    gender = models.CharField(max_length=100, null=True, choices=GENDER)
     faculty = models.CharField(max_length=100, null=True, choices=Faculty)
     department = models.CharField(max_length=100, null=True, choices=Department)
     profile_pic = models.ImageField(upload_to=student_directory_path ,null=True, blank=True)
 
 
     def students(self):
-        return [self.registration_id, self.firstname, self.lastname, self.date, self.course, self.teacher, self.year, self.faculty, self.department]
+        return [self.registration_id, self.firstname, self.lastname, self.date, self.course, self.teacher, self.year, self.faculty, self.department, self.gender]
 
 
 class Attendence(models.Model):
@@ -165,5 +175,5 @@ class Attendence(models.Model):
     period = models.CharField(max_length=200, null = True)
     status = models.CharField(max_length=200, null = True, default='Absent')
 
-    def __str__(self):
-        return str(self.Student_ID + "_" + str(self.date)+ "_" + str(self.period))
+    def attendences(self):
+        return [self.Student_ID, self.date, self.time, self.faculty, self.department, self.course, self.year, self.period, self.status]

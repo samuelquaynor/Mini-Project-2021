@@ -181,9 +181,17 @@ def searchAttendence(request):
 
 @login_required(login_url='login')
 def students(request):
+    attendences = Attendence.objects.all()
+    present = 0
+    absent = 0
+    for attendence in attendences:
+        if attendence.status == 'Present':
+            present += 1
+        elif attendence.status == 'Absent':
+            absent += 1
     students = Teacher.objects.get(
         username=request.user.username).students.all()
-    context = {'students': students.values}
+    context = {'students': students.values, 'attendences': attendences, 'present': present, 'absent': absent}
     return render(request, 'attendence_sys/students/students.html', context)
 
 

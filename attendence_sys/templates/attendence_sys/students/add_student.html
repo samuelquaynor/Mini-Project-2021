@@ -165,6 +165,17 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                             </div>
+                            {{ studentForm.gender }}
+                        </div>
+                    </div>
+                    <span class="text-error">{{ studentForm.gender.errors }}</span>
+
+                    <div class="form-group">
+                        <label class="control-label h5 text-muted">Enter Year:</label>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
                             {{ studentForm.year }}
                         </div>
                     </div>
