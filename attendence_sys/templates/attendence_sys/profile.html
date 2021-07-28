@@ -26,8 +26,8 @@
 </div>
 <!-- Page content -->
 <div class="container-fluid mt--6">
-  <div class="row">
-    <div class="col-xl-4 order-xl-2">
+  <div class="row justify-content-center">
+    <!-- <div class="col-xl-4 order-xl-2">
       <div class="card card-profile">
         <img src="/static/assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
         <div class="row justify-content-center">
@@ -80,17 +80,17 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-xl-8 order-xl-1">
+    </div> -->
+    <div class="col-xl-10 order-xl-1">
       <div class="card">
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col-8">
               <h3 class="mb-0">Edit profile </h3>
             </div>
-            <div class="col-4 text-right">
+            <!-- <div class="col-4 text-right">
               <a href="#!" class="btn btn-sm btn-primary">Settings</a>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="card-body">
@@ -115,13 +115,13 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">First name</label>
-                    <input type="text" id="input-first-name" class="form-control" placeholder="First name" value="Lucky">
+                    <input type="text" id="input-first-name" class="form-control" placeholder="First name" value="{{ request.user.firstname }}">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">Last name</label>
-                    <input type="text" id="input-last-name" class="form-control" placeholder="Last name" value="Jesse">
+                    <input type="text" id="input-last-name" class="form-control" placeholder="Last name" value="{{ request.user.lastname }}">
                   </div>
                 </div>
               </div>
@@ -133,30 +133,30 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-address">Address</label>
-                    <input id="input-address" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
+                    <label class="form-control-label" for="input-address">Faculty</label>
+                    <input id="input-address" class="form-control" placeholder="Faculty" value="{{ request.user.faculty }}" type="text">
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-city">City</label>
-                    <input type="text" id="input-city" class="form-control" placeholder="City" value="New York">
+                    <label class="form-control-label" for="input-city">Department</label>
+                    <input type="text" id="input-city" class="form-control" placeholder="Department" value="{{ request.user.department }}">
                   </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-country">Country</label>
-                    <input type="text" id="input-country" class="form-control" placeholder="Country" value="United States">
+                    <label class="form-control-label" for="input-country">Course</label>
+                    <input type="text" id="input-country" class="form-control" placeholder="Country" value="{{ request.user.course }}">
                   </div>
                 </div>
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-country">Postal code</label>
                     <input type="number" id="input-postal-code" class="form-control" placeholder="Postal code">
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
             <hr class="my-4" />
@@ -165,7 +165,7 @@
             <div class="pl-lg-4">
               <div class="form-group">
                 <label class="form-control-label">About Me</label>
-                <textarea rows="4" class="form-control" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
+                <textarea rows="4" class="form-control" placeholder="A few words about you ...">{{ request.user.about }}</textarea>
               </div>
             </div>
           </form>
