@@ -13,7 +13,7 @@ from .filters import AttendenceFilter
 # from django.views.decorators import gzip
 
 from .recognizer import Recognizer
-from datetime import date
+from datetime import date, datetime
 
 
 @login_required(login_url='login')
@@ -186,10 +186,12 @@ def students(request):
     attendences = Attendence.objects.all()
     present = 0
     absent = 0
+    # datee = datetime.now()
+    # absent = datetime.now().strftime('%Y-%m-%d')
     for attendence in attendences:
-        if attendence.status == 'Present':
+        if attendence.status == 'Present' and attendence.date.strftime('%Y-%m-%d') == datetime.now().strftime('%Y-%m-%d'):
             present += 1
-        elif attendence.status == 'Absent':
+        elif attendence.status == 'Absent' and attendence.date.strftime('%Y-%m-%d') == datetime.now().strftime('%Y-%m-%d'):
             absent += 1
     students = Teacher.objects.get(
         username=request.user.username).students.all()
