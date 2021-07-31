@@ -143,13 +143,7 @@ def takeAttendence(request):
                                             status='Present')
                     attendence.save()
                 else:
-                    attendence = Attendence(Student_ID=str(student.registration_id),
-                                            period=details['period'],
-                                            course=details['course'],
-                                            faculty=details['faculty'],
-                                            year=details['year'],
-                                            department=details['department'])
-                    attendence.save()
+                    messages.error(request, "Cannot find Student")
             attendences = Attendence.objects.filter(date=str(date.today(
             )), faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'])
             context = {"attendences": attendences, "ta": True}
@@ -209,6 +203,11 @@ def teachers(request):
 def profile(request):
     context = {}
     return render(request, 'attendence_sys/profile.html', context)
+
+@login_required(login_url='login')
+def achievements(request):
+    context = {}
+    return render(request, 'attendence_sys/achievements.html', context)
 
 
 # @login_required(login_url='login')

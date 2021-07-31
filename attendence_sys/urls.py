@@ -20,6 +20,7 @@ urlpatterns = [
     # path('students/studentsList', views.studentsList, name='studentList'),
     path('teachers/teacehersList', views.teachersList, name='teachersList'),
     path('addStudent/', views.addStudent, name='addStudent'),
+    path('achievements/', views.achievements, name='achievements'),
     # path('video_feed/', views.videoFeed, name='video_feed'),
     # path('videoFeed/', views.getVideo, name='videoFeed'),
 ]

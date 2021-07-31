@@ -14,7 +14,7 @@
           <li class="nav-item">
             <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'teachers' %}">
               <i class="ni ni-badge text-orange"></i>
-              <span class="nav-link-text">Teachers</span>
+              <span class="nav-link-text">Tasks</span>
             </a>
           </li>
           <li class="nav-item">
@@ -33,6 +33,12 @@
             <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="{% url 'attendence' %}">
               <i class="ni ni-bullet-list-67 text-default"></i>
               <span class="nav-link-text">Attendance</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="{% url 'achievements' %}">
+              <i class="ni ni-trophy text-default"></i>
+              <span class="nav-link-text">Achievements</span>
             </a>
           </li>
           <!-- <li class="nav-item">
@@ -96,10 +102,10 @@
     <!-- Brand -->
     <div class="sidenav-header" style="
     position: absolute;
-    bottom: 220px;
+    bottom: 180px;
     text-align: center;">
       <a class="" href="/">
-        <img src="/static/assets/img/brand/blue.jpg" style="width:100%">
+        <img src="/static/assets/img/brand/blue.jpg" style="width:90%">
         <h3 style="font-weight: 700;">UNIVERSITY OF COMPUTER SCIENCE</h3>
         <p style="font-size: 0.8rem;">Accra, Ghana</p>
       </a>
