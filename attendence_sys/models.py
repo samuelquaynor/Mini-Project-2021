@@ -31,6 +31,12 @@ def student_directory_path(instance, filename):
     filename = name +'.'+ ext 
     return 'Student_Images/{}/{}/{}/{}'.format(instance.course,instance.year,instance.faculty,filename)
 
+def teacher_directory_path(instance, filename): 
+    name, ext = filename.split(".")
+    name = instance.registration_id # + "_" + instance.branch + "_" + instance.year + "_" + instance.section
+    filename = name +'.'+ ext 
+    return 'Teacher_Images/{}/{}'.format(instance.course,filename)
+
 class CustomAccountManager(BaseUserManager):
 
     def create_superuser(self, email, username, firstname, password, **other_fields):
@@ -95,7 +101,7 @@ class Teacher(AbstractBaseUser, PermissionsMixin, models.Model):
     course = models.CharField(max_length=100, null=True, choices=Course)
     gender = models.CharField(max_length=100, null=True, choices=GENDER)
     date = models.DateField(auto_now_add = True, null = True)
-    profile_pic = models.ImageField(upload_to=student_directory_path ,null=True, blank=True)
+    profile_pic = models.ImageField(upload_to=teacher_directory_path ,null=True, blank=True)
     about = models.TextField(_('about'), max_length=500, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)

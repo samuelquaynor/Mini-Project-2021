@@ -18,7 +18,9 @@ from datetime import date, datetime
 
 @login_required(login_url='login')
 def home(request):
-    context = {}
+    todayDate = date.today()
+    todayDay = datetime.today().strftime('%A')
+    context = {'date': todayDate, 'todayDay': todayDay}
     return render(request, 'attendence_sys/home.html', context)
 
 
