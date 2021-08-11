@@ -18,7 +18,7 @@ def Recognizer(details):
 	base_dir = os.path.dirname(os.path.abspath(__file__))
 	# os.chdir("..")
 	base_dir = os.getcwd()
-	image_dir = os.path.join(base_dir,"{}\{}\{}\{}\{}\{}".format('static','images','Student_Images',details['course'],details['year'],details['faculty']))
+	image_dir = os.path.join('static\images',"{}\{}\{}\{}".format('Student_Images',details['course'],details['year'],details['faculty']))
 	# print(image_dir)
 	names = []
 
@@ -50,12 +50,12 @@ def Recognizer(details):
 
 		for face_encoding in face_encodings:
 
-			matches = face_recognition.compare_faces(known_face_encodings, np.array(face_encoding), tolerance = 0.6)
+			matches = face_recognition.compare_faces(known_face_encodings, np.array(face_encoding), tolerance = 0.35)
 
 			face_distances = face_recognition.face_distance(known_face_encodings,face_encoding)	
 			
 			try:
-				matches = face_recognition.compare_faces(known_face_encodings, np.array(face_encoding), tolerance = 0.6)
+				matches = face_recognition.compare_faces(known_face_encodings, np.array(face_encoding), tolerance = 0.35)
 
 				face_distances = face_recognition.face_distance(known_face_encodings,face_encoding)
 				best_match_index = np.argmin(face_distances)

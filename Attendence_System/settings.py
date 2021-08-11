@@ -127,6 +127,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'attendence_sys/static/images')
 
 AUTH_USER_MODEL = 'attendence_sys.Teacher'
