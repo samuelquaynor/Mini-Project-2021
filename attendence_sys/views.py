@@ -46,6 +46,12 @@ def loginPage(request):
     return render(request, "attendence_sys/accounts/login.html", {"form": form, "msg": msg})
 
 
+@login_required(login_url='login')
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+
 def register(request):
 
     msg = None
@@ -70,12 +76,6 @@ def register(request):
         form = SignUpForm()
 
     return render(request, "attendence_sys/accounts/register.html", {"form": form, "msg": msg, "success": success})
-
-
-@login_required(login_url='login')
-def logoutUser(request):
-    logout(request)
-    return redirect('login')
 
 
 @login_required(login_url='login')
@@ -127,30 +127,30 @@ def takeAttendence(request):
             'year': request.POST['year'],
             'period': request.POST['period'],
         }
-        # if Attendence.objects.filter(date=str(date.today()), faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'], period=details['period']).count() != 0:
-        #     messages.error(request, "Attendence already recorded.")
-        #     return redirect('attendence')
-        # else:
-        students = Student.objects.filter(
-            faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'])
-        names = Recognizer(details)
-        for student in students:
-            if str(student.registration_id) in names:
-                attendence = Attendence(Student_ID=str(student.registration_id),
-                                        period=details['period'],
-                                        course=details['course'],
-                                        faculty=details['faculty'],
-                                        year=details['year'],
-                                        department=details['department'],
-                                        status='Present')
-                attendence.save()
-            else:
-                messages.error(request, "Cannot find Student")
-        attendences = Attendence.objects.filter(date=str(date.today(
-        )), faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'])
-        context = {"attendences": attendences, "ta": True}
-        messages.success(request, "Attendence taking Success")
-        return render(request, 'attendence_sys/attendence.html', context)
+        if Attendence.objects.filter(date=str(date.today()), faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'], period=details['period']).count() != 0:
+            messages.error(request, "Attendence already recorded.")
+            return redirect('attendence')
+        else:
+            students = Student.objects.filter(
+                faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'])
+            names = Recognizer(details)
+            for student in students:
+                if str(student.registration_id) in names:
+                    attendence = Attendence(Student_ID=str(student.registration_id),
+                                            period=details['period'],
+                                            course=details['course'],
+                                            faculty=details['faculty'],
+                                            year=details['year'],
+                                            department=details['department'],
+                                            status='Present')
+                    attendence.save()
+                else:
+                    messages.error(request, "Cannot find Student")
+            attendences = Attendence.objects.filter(date=str(date.today(
+            )), faculty=details['faculty'], department=details['department'], course=details['course'],  year=details['year'])
+            context = {"attendences": attendences, "ta": True}
+            messages.success(request, "Attendence taking Success")
+            return render(request, 'attendence_sys/attendence.html', context)
     context = {}
     return render(request, 'attendence_sys/check-attendance.html', context)
 

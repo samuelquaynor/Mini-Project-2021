@@ -169,9 +169,10 @@ class Student(models.Model):
 
 
 class Attendence(models.Model):
-    # faculty = models.ForeignKey(Faculty, null = True, on_delete= models.SET_NULL)
+    # teacher = models.ForeignKey(Teacher, null = True, on_delete= models.SET_NULL)
     # student = models.ForeignKey(Student, null = True, on_delete= models.SET_NULL)
     Student_ID = models.CharField(max_length=200, null=True, blank=True)
+    # student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add = True, null = True)
     time = models.TimeField(auto_now_add=True, null = True)
     faculty = models.CharField(max_length=200, null = True)
